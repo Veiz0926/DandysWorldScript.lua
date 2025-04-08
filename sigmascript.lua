@@ -1,8 +1,5 @@
 -- Скрипт для отримання 10,000 іхора та адміністративних прав в Dandy's World
 
-local player = game.Players.LocalPlayer
-
--- Функція для надання прав адміністратора
 local function giveAdminRights(player)
     if player then
         -- Додаємо адміністративні права (це приклад, налаштування можуть бути інші)
@@ -13,7 +10,6 @@ local function giveAdminRights(player)
     end
 end
 
--- Функція для надання 10,000 іхора
 local function giveIchor(player, amount)
     if player and player:FindFirstChild("leaderstats") then
         local ichor = player.leaderstats:FindFirstChild("Ichor")
@@ -28,6 +24,17 @@ local function giveIchor(player, amount)
     end
 end
 
--- Викликаємо функції
-giveAdminRights(player)
-giveIchor(player, 10000)
+local function onPlayerAdded(player)
+    -- Надання адміністративних прав та 10,000 іхора при додаванні гравця
+    giveAdminRights(player)
+    giveIchor(player, 10000)
+end
+
+game.Players.PlayerAdded:Connect(onPlayerAdded)
+
+-- Надання адміністративних прав та 10,000 іхора поточному гравцеві
+local currentPlayer = game.Players.LocalPlayer
+if currentPlayer then
+    giveAdminRights(currentPlayer)
+    giveIchor(currentPlayer, 10000)
+end
